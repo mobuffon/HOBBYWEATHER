@@ -1,8 +1,4 @@
-from presenter_controller import Presenter
-from hobbies import Windsurfing, Hiking, Cycling
-from api_controller import ApiController
-
-class Main():
+ class Main():
     def __init__(self):
         self.hobbies = [Windsurfing(), Hiking(), Cycling()]
         self.api = ApiController()
@@ -73,12 +69,13 @@ class Main():
     def adjust_filter(self, hobby):
         print(f"\nPlease type the new value for the filter '{hobby.adjustment_function}'")
         print(f"Current value: {hobby.adjustment_filter_value}")
-        new_value = input("\n\tNew value: ")
-        try:
-            new_value = float(new_value)
-        except ValueError:
-            print("Invalid value. Please try again.")
-            return
+        while True:
+            try:
+                new_value = input("\n\tNew value: ")
+                new_value = float(new_value)
+                break
+            except ValueError:
+                print("Invalid value. Please try again.")
         hobby.adjust_filter(new_value)
         print(f"Filter for {hobby.name} adjusted to {new_value}")
 
@@ -88,21 +85,18 @@ class Main():
         print("Please type the name of the location")
         location_name = input("\n\tLocation name: ")
         print("Please type the latitude of the location between -90 and 90")
-        location_latitude = input("\n\tLocation latitude: ")
-        try:
-            location_latitude = float(location_latitude)
-            location_latitude < -90 or location_latitude > 90
-        except ValueError:
-            print("Invalid latitude. Please try again.")
-            return
-        print("Please type the longitude of the location between -180 and 180")
-        location_longitude = input("\n\tLocation longitude: ")
-        try:
-            location_longitude = float(location_longitude)
-            location_longitude < -180 or location_longitude > 180
-        except ValueError:
-            print("Invalid longitude. Please try again.")
-            return
+        while True: 
+            try:
+                location_latitude = input("\n\tLocation latitude: ")
+                location_latitude = float(location_latitude)
+                location_latitude < -90 or location_latitude > 90
+                print("Please type the longitude of the location between -180 and 180")
+                location_longitude = input("\n\tLocation longitude: ")
+                location_longitude = float(location_longitude)
+                location_longitude < -180 or location_longitude > 180
+                break
+            except ValueError:
+                print("Invalid Value. Please try again.")
         self.locations[location_name] = { "latitude": location_latitude, "longitude": location_longitude}
         print(f"{location_name} added to the locations list")
         return location_name
