@@ -44,24 +44,28 @@
         print(f"{len(self.locations) + 1}. create new location")
         print(f"{len(self.locations) + 2}. adjust the filter for {hobby.name}")
         print(f"{len(self.locations) + 3}. back to main menu")
-        selection = input("\n\tEnter the number of the action you want to select: ")
-        try:
-            selection = int(selection)
-            if selection == len(self.locations) + 1:
-                location = self.create_new_location()
-                self.forecast_for_hobby_at(hobby, location)
-            elif selection == len(self.locations) + 2:
-                self.adjust_filter(hobby)
-                self.select_location(hobby)
-            elif selection == len(self.locations) + 2:
-                return
-            elif selection < 1 or selection > len(self.locations):
+        while True:
+            try:
+                selection = input("\n\tEnter the number of the action you want to select: ")
+                selection = int(selection)
+                if selection == len(self.locations) + 1:
+                    location = self.create_new_location()
+                    self.forecast_for_hobby_at(hobby, location)
+                    return
+                elif selection == len(self.locations) + 2:
+                    self.adjust_filter(hobby)
+                    self.select_location(hobby)
+                    return
+                elif selection == len(self.locations) + 2:
+                    return
+                elif selection < 1 or selection > len(self.locations):
+                    print("Invalid selection. Please try again.")
+                else:
+                    location = list(self.locations.keys())[selection - 1]
+                    self.forecast_for_hobby_at(hobby, location)
+                    return
+            except ValueError:
                 print("Invalid selection. Please try again.")
-            else:
-                location = list(self.locations.keys())[selection - 1]
-                self.forecast_for_hobby_at(hobby, location)
-        except ValueError:
-            print("Invalid selection. Please try again.")
 
     def create_new_hobby(self):
         print("\n ********NEW FEATURE COMING SOON Function not implemented yet********")
@@ -84,22 +88,34 @@
         #Takes an input, validates it and adds it to the locations dictionary
         print("Please type the name of the location")
         location_name = input("\n\tLocation name: ")
-        print("Please type the latitude of the location between -90 and 90")
-        while True: 
-            try:
-                location_latitude = input("\n\tLocation latitude: ")
-                location_latitude = float(location_latitude)
-                location_latitude < -90 or location_latitude > 90
-                print("Please type the longitude of the location between -180 and 180")
-                location_longitude = input("\n\tLocation longitude: ")
-                location_longitude = float(location_longitude)
-                location_longitude < -180 or location_longitude > 180
-                break
-            except ValueError:
-                print("Invalid Value. Please try again.")
+        location_latitude = self.get_latitude()
+        location_longitude = self.get_longitude()
+        
         self.locations[location_name] = { "latitude": location_latitude, "longitude": location_longitude}
         print(f"{location_name} added to the locations list")
         return location_name
+        
+    def get_latitude(self):
+        while True:
+            try:
+                latitude = float(input("Enter the latitude of the location between -90 and 90: "))
+                if -90 <= latitude <= 90: 
+                    return latitude
+                else:
+                    print("Latitude must be between -90 and 90") 
+            except ValueError:
+                print("Invalid input. Please enter a numeric value.") 
+
+    def get_longitude(self):
+        while True:
+            try:
+                longitude = float(input("Enter the longitude of the location between -180 and 180: "))
+                if -180 <= longitude <= 180: 
+                    return longitude 
+                else:
+                    print("Longitude must be between -180 and 180")
+            except ValueError:
+                print("Invalid input. Please enter a numeric value.")
 
 
     def forecast_for_hobby_at(self, hobby, location):
