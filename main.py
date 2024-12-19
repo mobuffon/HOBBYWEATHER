@@ -1,4 +1,9 @@
- class Main():
+from presenter_controller import Presenter
+from hobbies import Windsurfing, Hiking, Cycling
+from api_controller import ApiController
+
+
+class Main():
     def __init__(self):
         self.hobbies = [Windsurfing(), Hiking(), Cycling()]
         self.api = ApiController()
