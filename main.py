@@ -61,7 +61,7 @@ class Main():
                     self.adjust_filter(hobby)
                     self.select_location(hobby)
                     return
-                elif selection == len(self.locations) + 2:
+                elif selection == len(self.locations) + 3:
                     return
                 elif selection < 1 or selection > len(self.locations):
                     print("Invalid selection. Please try again.")
