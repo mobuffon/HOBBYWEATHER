@@ -111,7 +111,7 @@ class Cycling(Hobby):
         ]
         self.display_info = ["day", "hour", "wind_speed_10m", "rain"]
         self.metrics = ["wind_speed_10m", "rain"]
-        self.adjustment_functions = "wind < than x km/h"
+        self.adjustment_function = "wind < than x km/h"
         self.adjustment_filter_value = 8
 
     def adjust_filter(self, wind):
